@@ -1,0 +1,77 @@
+<html>
+<body>
+<pre>
+Relay connections
+
+//red= vcc5
+
+//green=gnd
+
+//orange=signal (GPA0)
+
+ 
+
+//Use the A0 to turn on and turn off the bulb
+
+ 
+
+#include <stdio.h>
+
+#include "NUC1xx.h"
+
+#include "Driver\DrvGPIO.h"
+
+#include "Driver\DrvUART.h"
+
+#include "Driver\DrvSYS.h"
+
+ 
+
+// External Interrupt Handler (INT button to trigger GPB15)
+
+void EINT1Callback(void)
+
+{
+
+                DrvGPIO_ClrBit(E_GPA,0);           
+
+               DrvSYS_Delay(10);              // Delay
+
+}
+
+ 
+
+int main (void)
+
+{
+
+               UNLOCKREG();
+
+               LOCKREG();
+
+               DrvGPIO_Open(E_GPA, 0, E_IO_OUTPUT);
+
+// initial GPIO pin GPB11 for controlling Buzzer
+
+//DrvGPIO_Open(E_GPB, 15, E_IO_INPUT);          //make it work like a button
+
+                DrvGPIO_EnableEINT1(E_IO_BOTH_EDGE, E_MODE_EDGE, EINT1Callback);
+
+// configure external interrupt
+
+ 
+
+  while(1)
+{
+               
+
+ }
+
+ 
+
+}
+
+
+</pre>
+</body>
+</html>
